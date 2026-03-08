@@ -1,0 +1,1418 @@
+%% Plot colors
+magenta= [0.8 0 0.6];
+blue= [0 0.4 1];
+yellow= [0.97 0.58 0.11];
+blue_light = blue + 0.50 * (1 - blue);
+green= [62 150 81]/255;
+%%
+RF_crossUpdate_files= {'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort1_Processed_RFvOCGOL\MH110\RF_2\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort1_Processed_RFvOCGOL\MH112\RF\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort1_Processed_RFvOCGOL\MH113\RF_2\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort1_Processed_RFvOCGOL\MH114\RF\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort2_Processed_RFvOCGOL\MH118\RF\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH122\RF\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\RF\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH124\RF\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH125\RF\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH126\RF\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH128\RF\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH131\RFvOCGOL\crossSession_update\RF',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH132\RF\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH135\RFvOCGOL\crossSession_update\RF',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH136\RFvOCGOL\crossSession_update\RF',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH137\RFvOCGOL\crossSession_update\RF',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH138\RFvOCGOL\crossSession_update\RF'};
+
+OCGOL_crossUpdate_files= {'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort1_Processed_RFvOCGOL\MH110\OCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort1_Processed_RFvOCGOL\MH112\OCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort1_Processed_RFvOCGOL\MH113\OCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort1_Processed_RFvOCGOL\MH114\OCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort2_Processed_RFvOCGOL\MH115\OCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH122\OCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\OCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH124\OCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH126\OCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH127\OCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH128\OCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH134\RFvOCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH135\RFvOCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH136\RFvOCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH137\RFvOCGOL\crossSession_update',...
+    'R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH138\RFvOCGOL\crossSession_update'};
+
+%% Tuning curves example from MH123
+RF_tuning = load('R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\RF\crossSession_update\filtered_match_ROI\09_Sep_2024_filtered_match_ROIs.mat');
+RF_ses2=load('R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\RF\MH123_2024_04_17_RF-001_3\output\07_Sep_2024_ca_analysis.mat','Place_cell')
+RF_ses1=load('R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\RF\MH123_2024_04_16_RF-001_2\output\07_Sep_2024_ca_analysis.mat','Place_cell')
+
+OCG_tuning = load('R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\OCGOL\crossSession_update\filtered_match_ROI\09_Sep_2024_filtered_match_ROIs.mat');
+OCG_ses1=load('R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\OCGOL\MH123_2024_05_01_Random-001_6\output\07_Sep_2024_ca_analysis.mat','Place_cell')
+OCG_ses2=load('R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\OCGOL\MH123_2024_05_02_Random-001_7\output\07_Sep_2024_ca_analysis.mat','Place_cell')
+%% RF Lap maps
+% % Number of ROIs
+% nROIs = size(RF_tuning.ROI_assign_multi_filtered,1);
+% 
+% % Define chunk size (20 ROIs per figure)
+% chunkSize = 20;
+% 
+% % Loop over ROIs in chunks
+% for startIdx = 1:chunkSize:nROIs
+%     endIdx = min(startIdx + chunkSize - 1, nROIs); % make sure we don't exceed bounds
+%     numThisChunk = endIdx - startIdx + 1;
+% 
+%     figure;
+% 
+%     % First row: session 1
+%     for i = 1:numThisChunk
+%         ROI = RF_tuning.ROI_assign_multi_filtered(startIdx + i - 1, 1);
+%         subplot(2, chunkSize, i); % row 1
+%         imagesc(RF_ses1.Place_cell{1,1}.dF_lap_map_ROI{ROI});
+%         caxis([0 2]);
+%         title(['ROI ' num2str(ROI)]);
+%     end
+% 
+%     % Second row: session 2
+%     for i = 1:numThisChunk
+%         ROI = RF_tuning.ROI_assign_multi_filtered(startIdx + i - 1, 2);
+%         subplot(2, chunkSize, i + chunkSize); % row 2
+%         imagesc(RF_ses2.Place_cell{1,1}.dF_lap_map_ROI{ROI});
+%         caxis([0 2]);
+%         title(['ROI ' num2str(ROI)]);
+%     end
+% end
+% %% OCGOL A Lap Maps
+% % Number of ROIs
+% nROIs = size(OCG_tuning.ROI_assign_multi_filtered,1);
+% 
+% % Define chunk size (20 ROIs per figure)
+% chunkSize = 20;
+% 
+% % Loop over ROIs in chunks
+% for startIdx = 1:chunkSize:nROIs
+%     endIdx = min(startIdx + chunkSize - 1, nROIs); % make sure we don't exceed bounds
+%     numThisChunk = endIdx - startIdx + 1;
+% 
+%     figure;
+% 
+%     % First row: session 1
+%     for i = 1:numThisChunk
+%         ROI = OCG_tuning.ROI_assign_multi_filtered(startIdx + i - 1, 1);
+%         subplot(2, chunkSize, i); % row 1
+%         imagesc(OCG_ses1.Place_cell{1,4}.dF_lap_map_ROI{ROI});
+%         caxis([0 2]);
+%         title(['ROI ' num2str(ROI)]);
+%     end
+% 
+%     % Second row: session 2
+%     for i = 1:numThisChunk
+%         ROI = OCG_tuning.ROI_assign_multi_filtered(startIdx + i - 1, 2);
+%         subplot(2, chunkSize, i + chunkSize); % row 2
+%         imagesc(OCG_ses2.Place_cell{1,4}.dF_lap_map_ROI{ROI});
+%         caxis([0 2]);
+%         title(['ROI ' num2str(ROI)]);
+%     end
+% end
+% %% OCGOL B Lap Maps
+% % Number of ROIs
+% nROIs = size(OCG_tuning.ROI_assign_multi_filtered,1);
+% 
+% % Define chunk size (20 ROIs per figure)
+% chunkSize = 20;
+% 
+% % Loop over ROIs in chunks
+% for startIdx = 1:chunkSize:nROIs
+%     endIdx = min(startIdx + chunkSize - 1, nROIs); % make sure we don't exceed bounds
+%     numThisChunk = endIdx - startIdx + 1;
+% 
+%     figure;
+% 
+%     % First row: session 1
+%     for i = 1:numThisChunk
+%         ROI = OCG_tuning.ROI_assign_multi_filtered(startIdx + i - 1, 1);
+%         subplot(2, chunkSize, i); % row 1
+%         imagesc(OCG_ses1.Place_cell{1,5}.dF_lap_map_ROI{ROI});
+%         caxis([0 2]);
+%         title(['ROI ' num2str(ROI)]);
+%     end
+% 
+%     % Second row: session 2
+%     for i = 1:numThisChunk
+%         ROI = OCG_tuning.ROI_assign_multi_filtered(startIdx + i - 1, 2);
+%         subplot(2, chunkSize, i + chunkSize); % row 2
+%         imagesc(OCG_ses2.Place_cell{1,5}.dF_lap_map_ROI{ROI});
+%         caxis([0 2]);
+%         title(['ROI ' num2str(ROI)]);
+%     end
+% end
+
+%%
+figure;
+
+% Subplot 1
+subplot(2,3,1);
+imagesc(RF_ses1.Place_cell{1,1}.dF_lap_map_ROI{188});
+caxis([0 2]);
+hold on;
+yyaxis right;
+curve = RF_ses1.Place_cell{1,1}.Spatial_Info.mean_dF_map_smooth{1,8}(:,188);
+plot(normalize(curve, 'range'), 'r', 'LineWidth', 2.5,'Color',yellow);
+ylim([0 1]);
+xticks([1 50 100]);
+xticklabels({'0', '100', '200'});
+ax = gca;
+ax.YColor = 'none';     
+ax.YTick = [];
+ax.YLabel.String = '';
+yyaxis left;
+ylabel('Lap'); title('RF: Cell 117')
+
+% Subplot 2
+subplot(2,3,2);
+imagesc(OCG_ses1.Place_cell{1,4}.dF_lap_map_ROI{58});
+caxis([0 2]);
+hold on;
+yyaxis right;
+curve = OCG_ses1.Place_cell{1,4}.Spatial_Info.mean_dF_map_smooth{1,8}(:,58);
+plot(normalize(curve, 'range'), 'r', 'LineWidth', 2.5,'Color',blue_light);
+ylim([0 1]);
+xticks([1 50 100]);
+xticklabels({'0', '100', '200'});
+ax = gca;
+ax.YColor = 'none';     
+ax.YTick = [];
+ax.YLabel.String = '';
+yyaxis left; title('A: Cell 58')
+
+% Subplot 3
+subplot(2,3,3);
+imagesc(OCG_ses1.Place_cell{1,5}.dF_lap_map_ROI{144});
+caxis([0 2]);
+hold on;
+yyaxis right;
+curve = OCG_ses1.Place_cell{1,5}.Spatial_Info.mean_dF_map_smooth{1,8}(:,144);
+plot(normalize(curve, 'range'), 'r', 'LineWidth', 2.5,'Color',magenta);
+ylim([0 1]);
+xticks([1 50 100]);
+xticklabels({'0', '100', '200'});
+ax = gca;
+ax.YColor = 'none';     
+ax.YTick = [];
+ax.YLabel.String = '';
+yyaxis left;; title('B: Cell 144')
+
+% Subplot 4
+subplot(2,3,4);
+imagesc(RF_ses2.Place_cell{1,1}.dF_lap_map_ROI{172});
+caxis([0 2]);
+hold on;
+yyaxis right;
+curve = RF_ses2.Place_cell{1,1}.Spatial_Info.mean_dF_map_smooth{1,8}(:,172);
+plot(normalize(curve, 'range'), 'b', 'LineWidth', 2.5,'Color',yellow);
+ylim([0 1]);
+xticks([1 50 100]);
+xticklabels({'0', '100', '200'});
+ax = gca;
+ax.YColor = 'none';     
+ax.YTick = [];
+ax.YLabel.String = '';
+yyaxis left;
+
+% Subplot 5
+subplot(2,3,5);
+imagesc(OCG_ses2.Place_cell{1,4}.dF_lap_map_ROI{55});
+caxis([0 2]);
+hold on;
+yyaxis right;
+curve = OCG_ses2.Place_cell{1,4}.Spatial_Info.mean_dF_map_smooth{1,8}(:,55);
+plot(normalize(curve, 'range'), 'b', 'LineWidth', 2.5,'Color',blue_light);
+ylim([0 1]);
+xticks([1 50 100]);
+xticklabels({'0', '100', '200'});
+ax = gca;
+ax.YColor = 'none';     
+ax.YTick = [];
+ax.YLabel.String = '';
+yyaxis left;
+xlabel('Position (cm)')
+
+% Subplot 6
+subplot(2,3,6);
+imagesc(OCG_ses2.Place_cell{1,5}.dF_lap_map_ROI{90});
+caxis([0 2]);
+hold on;
+yyaxis right;
+curve = OCG_ses2.Place_cell{1,5}.Spatial_Info.mean_dF_map_smooth{1,8}(:,90);
+plot(normalize(curve, 'range'), 'b', 'LineWidth', 2.5,'Color',magenta);
+ylim([0 1]);
+xticks([1 50 100]);
+xticklabels({'0', '100', '200'});
+ax = gca;
+ax.YColor = 'none';     
+ax.YTick = [];
+ax.YLabel.String = '';
+yyaxis left;
+
+set(findall(gcf, '-property', 'FontSize'), 'FontSize', 14,'FontName','Arial');
+%exportgraphics(gcf, 'TuningCurves.pdf', 'ContentType', 'vector', 'Resolution', 300);
+%% Remapping plots
+sb = 0:2:200;
+
+cmap_yellow=whiteToColorMap(yellow);
+cmap_blue=whiteToColorMap(blue);
+cmap_magenta=whiteToColorMap(magenta);
+
+%RF
+load("R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\RF\crossSession_update\filtered_match_ROI\09_Sep_2024_filtered_match_ROIs.mat")
+load("R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\RF\crossSession_update\matching_tun_curves.mat")
+[~,RF1_peak] = max(matching_tun_curves.min_5_global_events.STC_norm{1, 1},[],2);
+[~,RF1_order] = sort(RF1_peak);
+
+S1_RF = matching_tun_curves.min_5_global_events.STC_norm{1, 1}(RF1_order,:);
+S2_RF = matching_tun_curves.min_5_global_events.STC_norm{1, 2}(RF1_order,:);
+sb = 0:2:200;
+
+s1=subplot(3,2,1);
+imagesc([sb(1) sb(end)],[1 length(RF1_order)],S1_RF)
+colormap(gca,cmap_yellow);
+caxis([0 1])
+ylabel('Neuron')
+xlabel('Position (cm)')
+title('RF')
+colorbar('location','westoutside')
+s2=subplot(3,2,2);
+imagesc([sb(1) sb(end)],[1 length(RF1_order)],S2_RF)
+colormap(gca,cmap_yellow);
+caxis([0 1])
+xlabel('Position (cm)')
+title('RF')
+
+%OCGOL
+load("R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\OCGOL\crossSession_update\matching_tun_curves.mat")
+indices = find(~isnan(ROI_assign_multi_filtered(:,1)) & ~isnan(ROI_assign_multi_filtered(:,2)));
+[~,OCGOLA_peak] = max(matching_tun_curves.min_5_global_events.STC_norm{1, 1},[],2);
+[~,OCGOLA_order] = sort(OCGOLA_peak);
+
+S1_OCGOLA = matching_tun_curves.min_5_global_events.STC_norm{1, 1}(OCGOLA_order,:);
+S2_OCGOLA = matching_tun_curves.min_5_global_events.STC_norm{1, 2}(OCGOLA_order,:);
+
+s3=subplot(3,2,3);
+imagesc([sb(1) sb(end)],[1 length(OCGOLA_order)],S1_OCGOLA)
+colormap(gca,cmap_blue);
+caxis([0 1])
+ylabel('Neuron')
+xlabel('Position (cm)')
+title('A')
+xline(sb(70),'k--','LineWidth',2)
+colorbar('location','westoutside')
+s4=subplot(3,2,4);
+imagesc([sb(1) sb(end)],[1 length(OCGOLA_order)],S2_OCGOLA)
+colormap(gca,cmap_blue);
+caxis([0 1])
+xlabel('Position (cm)')
+title('A')
+xline(sb(70),'k--','LineWidth',2)
+
+indices = find(~isnan(ROI_assign_multi_filtered(:,1)) & ~isnan(ROI_assign_multi_filtered(:,2)));
+[~,OCGOLB_peak] = max(matching_tun_curves.min_5_global_events.STC_norm{2, 1},[],2);
+[~,OCGOLB_order] = sort(OCGOLB_peak);
+
+S1_OCGOLB = matching_tun_curves.min_5_global_events.STC_norm{2, 1}(OCGOLB_order,:);
+S2_OCGOLB = matching_tun_curves.min_5_global_events.STC_norm{2, 2}(OCGOLB_order,:);
+
+s5=subplot(3,2,5);
+imagesc([sb(1) sb(end)],[1 length(OCGOLB_order)],S1_OCGOLB)
+colormap(gca,cmap_magenta);
+colorbar('location','westoutside')
+caxis([0 1])
+ylabel('Neuron')
+xlabel('Position (cm)')
+title('B')
+xline(sb(30),'k--','LineWidth',2)
+s6=subplot(3,2,6);
+imagesc([sb(1) sb(end)],[1 length(OCGOLB_order)],S2_OCGOLB)
+colormap(gca,cmap_magenta);
+caxis([0 1])
+xlabel('Position (cm)')
+title('B')
+xline(sb(30),'k--','LineWidth',2)
+
+%Adjust sizing of subplots with colorbar
+s1Pos = get(s1,'position');
+s2Pos = get(s2,'position');
+s1Pos(3:4) = [s2Pos(3:4)];
+set(s1,'position',s1Pos);
+
+s3Pos = get(s3,'position');
+s4Pos = get(s4,'position');
+s3Pos(3:4) = [s4Pos(3:4)];
+set(s3,'position',s3Pos);
+
+s5Pos = get(s5,'position');
+s6Pos = get(s6,'position');
+s5Pos(3:4) = [s6Pos(3:4)];
+set(s5,'position',s5Pos);
+
+set(findall(gcf, '-property', 'FontSize'), 'FontSize', 14);
+set(gcf, 'Renderer', 'painters');
+%exportgraphics(gcf, 'RepHeatMap.pdf', 'ContentType', 'vector', 'Resolution', 300);
+%% Get mouse IDs
+% Extract mouse IDs from file paths
+extractMouseID = @(fp) regexp(fp, 'MH\d{3}', 'match', 'once');
+
+RF_mice_cross = cellfun(extractMouseID, RF_crossUpdate_files, 'UniformOutput', false);
+OCGOL_mice_cross = cellfun(extractMouseID, OCGOL_crossUpdate_files, 'UniformOutput', false);
+
+% Find matched mice across cross session update directories (RF vs OCGOL)
+[matchedMice, idx_rf_cross, idx_ocg_cross] = intersect(RF_mice_cross, OCGOL_mice_cross);
+
+%% Directories for PV/TC data
+RF_PVTC_files= cell(size(RF_crossUpdate_files));  
+for i = 1:length(RF_crossUpdate_files)
+    RF_PVTC_files{i} = fullfile(RF_crossUpdate_files{i}, 'PV_TC_corr.mat');
+end
+
+OCGOL_PVTC_files= cell(size(OCGOL_crossUpdate_files)); 
+for i = 1:length(OCGOL_crossUpdate_files)
+    OCGOL_PVTC_files{i} = fullfile(OCGOL_crossUpdate_files{i}, 'PV_TC_corr.mat');
+end
+
+%Directories for tuned logicals files
+RF_tuning_files= cell(size(RF_crossUpdate_files));  
+for i = 1:length(RF_crossUpdate_files)
+    RF_tuning_files{i} = fullfile(RF_crossUpdate_files{i}, 'tuned_logicals.mat');
+end
+
+OCGOL_tuning_files= cell(size(OCGOL_crossUpdate_files)); 
+for i = 1:length(OCGOL_crossUpdate_files)
+    OCGOL_tuning_files{i} = fullfile(OCGOL_crossUpdate_files{i}, 'tuned_logicals.mat');
+end
+%% Define matching mice indices and subset file/mice lists
+RF_files_match = RF_PVTC_files(idx_rf_cross);
+OCGOL_files_match = OCGOL_PVTC_files(idx_ocg_cross);
+RF_mice_match = matchedMice;
+OCGOL_mice_match = matchedMice;
+sb = 0:2:200;
+
+%% Plot PV correlations for matching RF and OCGOL mice
+figure;
+nMice = length(RF_files_match);
+
+for mouse = 1:nMice
+    load(RF_files_match{mouse});
+    subplot(3, nMice, mouse)
+    imagesc([sb(1) sb(end)], [sb(1) sb(end)], PV_TC_corr.PVcorr_all_ses.A{1, 2})
+    caxis([-.25 1]);
+    title([RF_mice_match{mouse} ': RF'])
+
+    load(OCGOL_files_match{mouse});
+    subplot(3, nMice, nMice + mouse)
+    imagesc([sb(1) sb(end)], [sb(1) sb(end)], PV_TC_corr.PVcorr_all_ses.A{1, 2})
+    caxis([-.25 1]);
+    title([OCGOL_mice_match{mouse} ': A Trial'])
+
+    subplot(3, nMice, 2 * nMice + mouse)
+    imagesc([sb(1) sb(end)], [sb(1) sb(end)], PV_TC_corr.PVcorr_all_ses.B{1, 2})
+    caxis([-.25 1]);
+    title([OCGOL_mice_match{mouse} ': B Trial'])
+end
+
+%% Extract PV and TC measures for matched RF mice
+totals_sbs = 100;
+
+RF.meanPV_rel_d1 = NaN(1, nMice);
+RF.meanTC_rel_d1_si = NaN(nMice,1); 
+RF.meanTC_rel_d1_ts = NaN(nMice,1);
+RF.PV_count = NaN(nMice,1);
+RF.TC_count_si = NaN(nMice,1);
+RF.TC_count_ts = NaN(nMice,1);
+RF.PV_allsb = NaN(nMice, totals_sbs);
+RF.PV_offdiag = NaN(nMice, totals_sbs - 1);
+RF.corrMap = cell(1,nMice);
+
+figure;
+for mouse = 1:nMice
+    load(RF_files_match{mouse});
+    RF.meanPV_rel_d1(mouse) = PV_TC_corr.meanPV_rel_d1.A;
+    RF.PV_allsb(mouse, :) = diag(PV_TC_corr.PVcorr_all_ses.A{1, 2});
+    RF.meanTC_rel_d1_si(mouse) = PV_TC_corr.meanTC_rel_d1.si.A;  
+    RF.meanTC_rel_d1_ts(mouse) = PV_TC_corr.meanTC_rel_d1.ts.A;
+    RF.PV_count(mouse) = PV_TC_corr.PV_corr_ROI_count.A(1,2);
+    RF.TC_count_si(mouse) = PV_TC_corr.TCcorr_all_ses_neuron_count.si.A(1,2);
+    RF.TC_count_ts(mouse) = PV_TC_corr.TCcorr_all_ses_neuron_count.ts.A(1,2);
+    RF.corrMap{mouse} = PV_TC_corr.PVcorr_all_ses.A{1, 2};
+
+    for ii = 1:(totals_sbs - 1)
+        RF.PV_offdiag(mouse, ii) = mean(diag(PV_TC_corr.PVcorr_all_ses.A{1, 2}, ii));
+    end
+
+    subplot(3, nMice, mouse)
+    imagesc(PV_TC_corr.PVcorr_all_ses.A{1, 2})
+    colormap(gca, cmap_yellow);
+    caxis([0 1]);
+    title([matchedMice{mouse} ': RF'])
+end  
+
+%% Extract PV and TC measures for matched OCGOL mice
+
+fields = {'A', 'B'};
+metrics = {'meanPV_rel_d1', 'meanTC_rel_d1_si', 'meanTC_rel_d1_ts', ...
+           'PV_allsb', 'PV_offdiag', 'PV_count', ...
+           'TC_count_si', 'TC_count_ts'};
+OCGOL.corrMap.A = cell(1,nMice);
+OCGOL.corrMap.B = cell(1,nMice);
+
+
+for m = 1:numel(metrics)
+    for f = 1:numel(fields)
+        if contains(metrics{m}, 'offdiag')
+            sz = totals_sbs - 1;
+        elseif contains(metrics{m}, 'mean')
+            sz = 1;
+        else
+            sz = totals_sbs;
+        end
+        OCGOL.(metrics{m}).(fields{f}) = NaN(nMice, sz);
+    end
+end
+
+for mouse = 1:nMice
+    load(OCGOL_files_match{mouse});
+
+    for f = 1:2
+        fld = fields{f};
+        OCGOL.meanPV_rel_d1.(fld)(mouse) = PV_TC_corr.meanPV_rel_d1.(fld);
+        OCGOL.meanTC_rel_d1_si.(fld)(mouse) = PV_TC_corr.meanTC_rel_d1.si.(fld);   
+        OCGOL.meanTC_rel_d1_ts.(fld)(mouse) = PV_TC_corr.meanTC_rel_d1.ts.(fld);
+        OCGOL.PV_allsb.(fld)(mouse,:) = diag(PV_TC_corr.PVcorr_all_ses.(fld){1, 2});
+
+        for ii = 1:(totals_sbs - 1)
+            OCGOL.PV_offdiag.(fld)(mouse,ii) = mean(diag(PV_TC_corr.PVcorr_all_ses.(fld){1, 2}, ii));
+        end
+        
+        OCGOL.PV_count.(fld)(mouse) = PV_TC_corr.PV_corr_ROI_count.(fld)(1,2);
+        OCGOL.TC_count_si.(fld)(mouse) = PV_TC_corr.TCcorr_all_ses_neuron_count.si.(fld)(1,2);
+        OCGOL.TC_count_ts.(fld)(mouse) = PV_TC_corr.TCcorr_all_ses_neuron_count.ts.(fld)(1,2);
+    end
+
+    OCGOL.corrMap.A{mouse} = PV_TC_corr.PVcorr_all_ses.A{1, 2};
+    subplot(3, nMice, nMice + mouse)
+    imagesc(PV_TC_corr.PVcorr_all_ses.A{1, 2})
+    colormap(gca, cmap_blue);
+    caxis([0 1]);
+    title([matchedMice{mouse} ': A Trial'])
+    
+    OCGOL.corrMap.B{mouse} = PV_TC_corr.PVcorr_all_ses.B{1, 2};
+    subplot(3, nMice, 2 * nMice + mouse)
+    imagesc(PV_TC_corr.PVcorr_all_ses.B{1, 2})
+    colormap(gca, cmap_magenta);
+    caxis([0 1]);
+    title([matchedMice{mouse} ': B Trial'])
+end
+
+
+%% All mouse average PV correlation map
+% Concatenate all matrices along the 3rd dimension
+RF_allMatrices = cat(3, RF.corrMap{:});
+OCGOL_A_allMatrices = cat(3, OCGOL.corrMap.A{:});
+OCGOL_B_allMatrices = cat(3, OCGOL.corrMap.B{:});
+
+% Compute mean across the 3rd dimension
+RF_avgMatrix = mean(RF_allMatrices, 3);
+OCGOL_A_avgMatrix = mean(OCGOL_A_allMatrices, 3);
+OCGOL_B_avgMatrix = mean(OCGOL_B_allMatrices, 3);
+
+subplot(3,1,1)
+imagesc([sb(1) sb(end)],[sb(1) sb(end)],RF_avgMatrix)
+colormap(gca, cmap_yellow);
+caxis([0 0.7]); colorbar('Location','westoutside'); 
+xlabel('Position'); ylabel('Position');
+
+subplot(3,1,2)
+imagesc([sb(1) sb(end)],[sb(1) sb(end)],OCGOL_A_avgMatrix)
+colormap(gca, cmap_blue);
+caxis([0 0.7]); colorbar('Location','westoutside'); 
+xlabel('Position'); ylabel('Position');
+
+subplot(3,1,3)
+imagesc([sb(1) sb(end)],[sb(1) sb(end)],OCGOL_B_avgMatrix)
+colormap(gca, cmap_magenta);
+caxis([0 0.7]); colorbar('Location','westoutside'); 
+xlabel('Position'); ylabel('Position');
+set(findall(gcf, '-property', 'FontSize'), 'FontSize', 14);
+set(gcf, 'Renderer','painters')
+exportgraphics(gcf, 'AvgPVCorrMap.pdf', 'ContentType', 'vector', 'Resolution', 300);
+%%
+subplot(3,1,1)
+imagesc(RF_avgMatrix)
+colormap(gca, 'gray');box off
+xlabel('Position'); ylabel('Position');
+
+subplot(3,1,2)
+imagesc(RF_avgMatrix)
+colormap(gca, 'gray');box off
+xlabel('Position'); ylabel('Position');
+
+subplot(3,1,3)
+imagesc(RF_avgMatrix)
+colormap(gca, 'gray');box off
+xlabel('Position'); ylabel('Position');
+
+set(findall(gcf, '-property', 'FontSize'), 'FontSize', 14);
+set(gcf, 'Renderer', 'opengl');
+%% Centroid shift
+RF.centShift = struct();
+
+for i = 1:numel(idx_rf_cross)
+    pathName = RF_crossUpdate_files{idx_rf_cross(i)};
+
+    % --- Extract mouse ID (e.g., "MH110") from path ---
+    tokens = regexp(pathName, '(MH\d+)', 'match');
+    if ~isempty(tokens)
+        mouseID = tokens{1};
+    else
+        mouseID = sprintf('Mouse_%02d', i); % fallback name if regex fails
+    end
+
+    fprintf('Processing %s (%d of %d)...\n', mouseID, i, numel(idx_rf_cross));
+
+    try
+        % --- Run your centroid shift function ---
+        [theta, unit_vectors, circular_mean_rad, circular_mean_cm] = centroid_shift_taskDemand(pathName,'RF');
+
+        % --- Store outputs in structure ---
+        RF.centShift.(mouseID).path = pathName;
+        RF.centShift.(mouseID).theta = theta;
+        RF.centShift.(mouseID).unit_vectors = unit_vectors;
+        RF.centShift.(mouseID).circular_mean_rad = circular_mean_rad;
+        RF.centShift.(mouseID).circular_mean_cm = circular_mean_cm;
+
+    catch ME
+        warning('Error processing %s: %s', mouseID, ME.message);
+        RF.centShift.(mouseID).error = ME.message;
+    end
+end
+
+% Initialize master results structure for control day-------------------
+OCGOL.centShift = struct();
+
+for i = 1:numel(idx_ocg_cross)
+    pathName = OCGOL_crossUpdate_files{idx_ocg_cross(i)};
+
+    % --- Extract mouse ID (e.g., "MH110") from path ---
+    tokens = regexp(pathName, '(MH\d+)', 'match');
+    if ~isempty(tokens)
+        mouseID = tokens{1};
+    else
+        mouseID = sprintf('Mouse_%02d', i); % fallback name if regex fails
+    end
+
+    fprintf('Processing %s (%d of %d)...\n', mouseID, i, numel(idx_ocg_cross));
+
+    try
+        % --- Run your centroid shift function ---
+        [theta, unit_vectors, circular_mean_rad, circular_mean_cm] = centroid_shift_taskDemand(pathName,'OCGOL');
+
+        % --- Store outputs in structure ---
+        OCGOL.centShift.(mouseID).path = pathName;
+        OCGOL.centShift.(mouseID).theta = theta;
+        OCGOL.centShift.(mouseID).unit_vectors = unit_vectors;
+        OCGOL.centShift.(mouseID).circular_mean_rad = circular_mean_rad;
+        OCGOL.centShift.(mouseID).circular_mean_cm = circular_mean_cm;
+
+    catch ME
+        warning('Error processing %s: %s', mouseID, ME.message);
+        OCGOL.centShift.(mouseID).error = ME.message;
+    end
+end
+%%
+%% Plot centroid shift
+%RF
+mouseIDs = fieldnames(RF.centShift);
+
+RF.centShift.MeanCm = []; % collect all circular_mean_cm values
+
+for i = 1:numel(mouseIDs)
+    if isfield(RF.centShift.(mouseIDs{i}), 'circular_mean_cm')
+        RF.centShift.MeanCm(end+1) = RF.centShift.(mouseIDs{i}).circular_mean_cm{4};
+    end
+end
+%--------------------------------------------------------------------------
+%OCGOL
+mouseIDs = fieldnames(OCGOL.centShift);
+
+OCGOL.centShift.A.MeanCm = []; % collect all circular_mean_cm values
+OCGOL.centShift.B.MeanCm = []; 
+
+for i = 1:numel(mouseIDs)
+    if isfield(OCGOL.centShift.(mouseIDs{i}), 'circular_mean_cm')
+        OCGOL.centShift.A.MeanCm(end+1) = OCGOL.centShift.(mouseIDs{i}).circular_mean_cm{4};
+    end
+end
+
+for i = 1:numel(mouseIDs)
+    if isfield(OCGOL.centShift.(mouseIDs{i}), 'circular_mean_cm')
+        OCGOL.centShift.B.MeanCm(end+1) = OCGOL.centShift.(mouseIDs{i}).circular_mean_cm{5};
+    end
+end
+
+
+cent_shift=[RF.centShift.MeanCm' OCGOL.centShift.A.MeanCm' OCGOL.centShift.B.MeanCm'];
+savepath = 'C:\Users\mh5481\OneDrive - NYU Langone Health\Desktop\Figures\RFvOCGOL_LEC\Stats\3'; % Path to save directory
+%writematrix(cent_shift, fullfile(savepath,'centShift.csv'));
+
+figure;
+subplot(2,1,1);hold on
+for i=1:size(cent_shift,1)
+    plot([1 2 3],cent_shift(i,:),'Color',[0.5 0.5 0.5])
+end
+
+errorbar(1,mean(cent_shift(:,1)),SEM_col(cent_shift(:,1)),'LineWidth',2,'Color',yellow); %TODO figure out why there is a nan for mouse 8 (126) - has a NaN in theta
+errorbar(2,mean(cent_shift(:,2)),SEM_col(cent_shift(:,2)),'LineWidth',2,'Color',blue);
+errorbar(3,mean(cent_shift(:,3)),SEM_col(cent_shift(:,3)),'LineWidth',2,'Color',magenta);
+
+scatter(1, mean(cent_shift(:,1)), 's', 'filled', 'MarkerFaceColor', yellow)
+scatter(2, mean(cent_shift(:,2)), 's', 'filled', 'MarkerFaceColor', blue)
+scatter(3, mean(cent_shift(:,3)), 's', 'filled', 'MarkerFaceColor', magenta)
+
+xticks([1 2 3]); xticklabels({'RF','A','B'}); xlim([0 4])
+ylabel('Centroid Shift (cm)')
+
+% Plot TC correlation 
+xTickVals = [1:3];
+xTickLabels = {'RF','A','B'};
+xLimits = [0 4];
+
+TC_match = [RF.meanTC_rel_d1_si OCGOL.meanTC_rel_d1_si.A OCGOL.meanTC_rel_d1_si.B];
+
+savepath = 'C:\Users\mh5481\OneDrive - NYU Langone Health\Desktop\Figures\RFvOCGOL_LEC\Stats\3'; % Path to save directory
+%Export matrices for stats
+%writematrix(TC_match, fullfile(savepath,'TC.csv'));
+
+subplot(2,1,2);hold on;
+for i=1:size(TC_match,1)
+    plot(xTickVals,TC_match(i,:),'Color',[0.5 0.5 0.5])
+end
+errorbar(1,mean(TC_match(:,1)),SEM_col(TC_match(:,1)),'LineWidth',2,'Color',yellow);
+errorbar(2,mean(TC_match(:,2)),SEM_col(TC_match(:,2)),'LineWidth',2,'Color', blue);
+errorbar(3,mean(TC_match(:,3)),SEM_col(TC_match(:,3)),'LineWidth',2,'Color', magenta);
+
+scatter(1,mean(TC_match(:,1)),'s', 'filled', 'MarkerFaceColor', yellow)
+scatter(2,mean(TC_match(:,2)),'s', 'filled', 'MarkerFaceColor', blue)
+scatter(3,mean(TC_match(:,3)),'s', 'filled', 'MarkerFaceColor', magenta)
+xticks(xTickVals); xticklabels(xTickLabels);xlim(xLimits)
+ylim([0.2 0.8]); ylabel('TC Correlation')
+
+set(findall(gcf, '-property', 'FontSize'), 'FontSize', 14,'FontName','Arial');
+set(gcf, 'Renderer', 'painters');
+%exportgraphics(gcf, 'CentShift_TC.pdf', 'ContentType', 'vector','Resolution',300);
+%% PV SB binned by zone
+cue_range=[1:10,96:100];
+rzA_range=65:79;
+rzB_range=25:39;
+
+cue_PV = [mean(RF.PV_allsb(:,cue_range),2) mean(OCGOL.PV_allsb.A(:,cue_range),2) mean(OCGOL.PV_allsb.B(:,cue_range),2)];
+rzA_PV = [mean(RF.PV_allsb(:,rzA_range),2) mean(OCGOL.PV_allsb.A(:,rzA_range),2) mean(OCGOL.PV_allsb.B(:,rzA_range),2)];
+rzB_PV = [mean(RF.PV_allsb(:,rzB_range),2) mean(OCGOL.PV_allsb.A(:,rzB_range),2) mean(OCGOL.PV_allsb.B(:,rzB_range),2)];
+
+% writematrix(cue_PV, fullfile(savepath,'cue_PV.csv'));
+% writematrix(rzA_PV, fullfile(savepath,'rzA_PV.csv'));
+% writematrix(rzB_PV, fullfile(savepath,'rzB_PV.csv'));
+%%
+% Plot PV correlation
+PV_match = [RF.meanPV_rel_d1' OCGOL.meanPV_rel_d1.A OCGOL.meanPV_rel_d1.B];
+
+%Export matrices for stats
+%writematrix(PV_match, fullfile(savepath,'PV.csv'));
+%writematrix([RF.PV_allsb' OCGOL.PV_allsb.A' OCGOL.PV_allsb.B'] , fullfile(savepath,'PVallSB.csv'));
+%
+figure;
+subplot(4,1,1); hold on;
+for i=1:size(PV_match,1)
+    plot(xTickVals,PV_match(i,:),'Color',[0.5 0.5 0.5])
+end
+errorbar(1,mean(PV_match(:,1)),SEM_col(PV_match(:,1)),'LineWidth',2,'Color',yellow);
+errorbar(2,mean(PV_match(:,2)),SEM_col(PV_match(:,2)),'LineWidth',2,'Color', blue);
+errorbar(3,mean(PV_match(:,3)),SEM_col(PV_match(:,3)),'LineWidth',2,'Color', magenta);
+
+scatter(1,mean(PV_match(:,1)),'s', 'filled', 'MarkerFaceColor', yellow)
+scatter(2,mean(PV_match(:,2)),'s', 'filled', 'MarkerFaceColor', blue)
+scatter(3,mean(PV_match(:,3)),'s', 'filled', 'MarkerFaceColor', magenta)
+xticks(xTickVals); xticklabels(xTickLabels); xlim(xLimits)
+ylim([0.2 0.8]); ylabel('PV Correlation')
+
+%Adjust for circularity
+nBins = 100;
+binSize = 2;
+track_length = nBins * binSize;
+
+lags = 1:(nBins - 1);
+dist = lags * binSize;
+
+% Circular distance
+circ_dist = min(dist, track_length - dist);
+
+% Signed circular distance (for mirroring)
+signed_dist = dist;
+signed_dist(dist > track_length/2) = ...
+    dist(dist > track_length/2) - track_length;
+
+[signed_dist_sorted, sort_idx] = sort(signed_dist);
+
+RF_mean = mean(RF.PV_offdiag);
+RF_sem  = SEM_col(RF.PV_offdiag);
+
+OC_A_mean = mean(OCGOL.PV_offdiag.A);
+OC_A_sem  = SEM_col(OCGOL.PV_offdiag.A);
+
+OC_B_mean = mean(OCGOL.PV_offdiag.B);
+OC_B_sem  = SEM_col(OCGOL.PV_offdiag.B);
+
+% Reorder everything
+RF_mean = RF_mean(sort_idx);
+RF_sem  = RF_sem(sort_idx);
+
+OC_A_mean = OC_A_mean(sort_idx);
+OC_A_sem  = OC_A_sem(sort_idx);
+
+OC_B_mean = OC_B_mean(sort_idx);
+OC_B_sem  = OC_B_sem(sort_idx);
+
+%re-sort offdiag matrix according to circularity
+RF_offdiag_sorted   = RF.PV_offdiag(:, sort_idx);
+OC_A_offdiag_sorted = OCGOL.PV_offdiag.A(:, sort_idx);
+OC_B_offdiag_sorted = OCGOL.PV_offdiag.B(:, sort_idx);
+%writematrix([RF_offdiag_sorted' OC_A_offdiag_sorted' OC_B_offdiag_sorted'] , fullfile(savepath,'PVoffdiag.csv'));
+
+results=friedman_stats(RF_offdiag_sorted, OC_A_offdiag_sorted, OC_B_offdiag_sorted, {'RF','A','B'},false);
+%save(fullfile(savepath,'OffDiag_Friedman.mat'), 'results');
+%writetable(results.pairwise_sig_table, fullfile(savepath,'Offdiag_circSorted_all.xlsx'))
+
+% Split into negative and positive (exclude 0 just in case)
+neg_idx = signed_dist_sorted < 0;
+pos_idx = signed_dist_sorted > 0;
+
+subplot(4,1,4); hold on;
+
+% --- RF ---
+shadedErrorBar(signed_dist_sorted(neg_idx), ...
+    RF_mean(neg_idx), RF_sem(neg_idx), ...
+    'lineProps',{'Color',yellow,'LineWidth',1.5});
+
+shadedErrorBar(signed_dist_sorted(pos_idx), ...
+    RF_mean(pos_idx), RF_sem(pos_idx), ...
+    'lineProps',{'Color',yellow,'LineWidth',1.5});
+
+% --- A ---
+shadedErrorBar(signed_dist_sorted(neg_idx), ...
+    OC_A_mean(neg_idx), OC_A_sem(neg_idx), ...
+    'lineProps',{'Color',blue,'LineWidth',1.5});
+
+shadedErrorBar(signed_dist_sorted(pos_idx), ...
+    OC_A_mean(pos_idx), OC_A_sem(pos_idx), ...
+    'lineProps',{'Color',blue,'LineWidth',1.5});
+
+% --- B ---
+shadedErrorBar(signed_dist_sorted(neg_idx), ...
+    OC_B_mean(neg_idx), OC_B_sem(neg_idx), ...
+    'lineProps',{'Color',magenta,'LineWidth',1.5});
+
+shadedErrorBar(signed_dist_sorted(pos_idx), ...
+    OC_B_mean(pos_idx), OC_B_sem(pos_idx), ...
+    'lineProps',{'Color',magenta,'LineWidth',1.5});
+
+yline(0, 'k--', 'LineWidth',1.5,'HandleVisibility','off');
+xlabel('Circular Distance (cm)');
+ylabel('PV Correlation');
+xlim([-100 100]);
+ylim([-0.1 0.6]);
+plotSignificanceBars(gca,signed_dist_sorted,results)
+
+
+results=friedman_stats(RF.PV_allsb, OCGOL.PV_allsb.A, OCGOL.PV_allsb.B, {'RF','A','B'},false);
+%save(fullfile(savepath,'PVAllSB_Friedman.mat'), 'results');
+pos=1:2:200;
+subplot(4,1,2); hold on;
+shadedErrorBar(pos,mean(RF.PV_allsb),SEM_col(RF.PV_allsb),'lineProps',{'Color',yellow,'LineWidth',1.5});
+shadedErrorBar(pos,mean(OCGOL.PV_allsb.A),SEM_col(OCGOL.PV_allsb.A),'lineProps',{'Color',blue,'LineWidth',1.5});
+shadedErrorBar(pos,mean(OCGOL.PV_allsb.B),SEM_col(OCGOL.PV_allsb.B),'lineProps',{'Color',magenta,'LineWidth',1.5});
+xlabel('Position (cm)');
+ylim([0.2 0.7]); ylabel('PV Correlation')
+xline(pos(30),'--', 'LineWidth',1.5,'HandleVisibility', 'off','Color',magenta)
+xline(pos(70),'--', 'LineWidth',1.5,'HandleVisibility', 'off','Color',blue)
+ylim([0.2 0.8]); 
+ylabel('PV Correlation')
+
+yl = ylim;
+y_bar = yl(2) + 0.01;   % slightly above top of axis
+
+% Extend ylim slightly so bars are visible
+ylim([yl(1) yl(2)+0.03])
+
+% --- Cue zone ---
+plot([pos(1) pos(10)],   [y_bar y_bar], 'Color', green , 'LineWidth', 6, 'Clipping','off');
+plot([pos(96) pos(100)], [y_bar y_bar], 'Color', green , 'LineWidth', 6, 'Clipping','off');
+
+% --- B reward zone ---
+plot([pos(rzB_range(1)) pos(rzB_range(end))],  [y_bar y_bar], 'Color', magenta, 'LineWidth', 6, 'Clipping','off');
+
+% --- A reward zone ---
+plot([pos(rzA_range(1)) pos(rzA_range(end))],  [y_bar y_bar], 'Color', blue,'LineWidth', 6, 'Clipping','off');
+
+
+subplot(4,1,3); hold on
+for i=1:size(cue_PV,1)
+    plot(xTickVals,cue_PV(i,:),'Color',[0.5 0.5 0.5])
+end
+errorbar(1,mean(cue_PV(:,1)),SEM_col(cue_PV(:,1)),'LineWidth',2,'Color',yellow);
+errorbar(2,mean(cue_PV(:,2)),SEM_col(cue_PV(:,2)),'LineWidth',2,'Color', blue);
+errorbar(3,mean(cue_PV(:,3)),SEM_col(cue_PV(:,3)),'LineWidth',2,'Color', magenta);
+scatter(1,mean(cue_PV(:,1)),'s', 'filled', 'MarkerFaceColor', yellow)
+scatter(2,mean(cue_PV(:,2)),'s', 'filled', 'MarkerFaceColor', blue)
+scatter(3,mean(cue_PV(:,3)),'s', 'filled', 'MarkerFaceColor', magenta)
+
+for i=1:size(rzA_PV,1)
+    plot([4 5 6],rzA_PV(i,:),'Color',[0.5 0.5 0.5])
+end
+errorbar(4,mean(rzA_PV(:,1)),SEM_col(rzA_PV(:,1)),'LineWidth',2,'Color',yellow);
+errorbar(5,mean(rzA_PV(:,2)),SEM_col(rzA_PV(:,2)),'LineWidth',2,'Color', blue);
+errorbar(6,mean(rzA_PV(:,3)),SEM_col(rzA_PV(:,3)),'LineWidth',2,'Color', magenta);
+scatter(4,mean(rzA_PV(:,1)),'s', 'filled', 'MarkerFaceColor', yellow)
+scatter(5,mean(rzA_PV(:,2)),'s', 'filled', 'MarkerFaceColor', blue)
+scatter(6,mean(rzA_PV(:,3)),'s', 'filled', 'MarkerFaceColor', magenta)
+
+for i=1:size(rzB_PV,1)
+    plot([7 8 9],rzB_PV(i,:),'Color',[0.5 0.5 0.5])
+end
+errorbar(7,mean(rzB_PV(:,1)),SEM_col(rzB_PV(:,1)),'LineWidth',2,'Color',yellow);
+errorbar(8,mean(rzB_PV(:,2)),SEM_col(rzB_PV(:,2)),'LineWidth',2,'Color', blue);
+errorbar(9,mean(rzB_PV(:,3)),SEM_col(rzB_PV(:,3)),'LineWidth',2,'Color', magenta);
+scatter(7,mean(rzB_PV(:,1)),'s', 'filled', 'MarkerFaceColor', yellow)
+scatter(8,mean(rzB_PV(:,2)),'s', 'filled', 'MarkerFaceColor', blue)
+scatter(9,mean(rzB_PV(:,3)),'s', 'filled', 'MarkerFaceColor', magenta)
+
+ylabel('PV Correlation'); ylim([0.2 0.8])
+xlim([0 10]); xticks([2 5 8]); xticklabels({'Cue Zone', 'A Zone', 'B Zone'});
+set(findall(gcf, '-property', 'FontSize'), 'FontSize', 14);
+set(gcf, 'Renderer', 'painters')
+%exportgraphics(gcf, 'Fig3PVTC_inclZones.pdf', 'ContentType', 'vector','Resolution',300);
+%% Supplemental PV for tuned only cells
+% Run PV analysis for tuned cells only
+RF_SIOnly=PV_corr_SI_tuned_only(matchedMice, RF_files_match, 1);
+OCGOL_SIOnly=PV_corr_SI_tuned_only(matchedMice, OCGOL_files_match, 2);
+fields = {'A','B'};
+nMice = length(matchedMice);
+
+%% Determine spatial bin size from first valid mouse
+for m = 1:nMice
+    exampleMat = OCGOL_SIOnly.(matchedMice{m}).PVcorr.A{1,2};
+    if ~isempty(exampleMat)
+        totals_sbs = size(exampleMat,1);
+        break
+    end
+end
+
+%OCGOL storage
+% Preallocate group containers
+OCGOL_SI_group.corrMap.A = cell(1,nMice);
+OCGOL_SI_group.corrMap.B = cell(1,nMice);
+
+OCGOL_SI_group.meanPV_rel_d1.A = NaN(nMice, size(OCGOL_SIOnly.(matchedMice{1}).meanPV_rel_d1.A,2));
+OCGOL_SI_group.meanPV_rel_d1.B = NaN(nMice, size(OCGOL_SIOnly.(matchedMice{1}).meanPV_rel_d1.B,2));
+
+OCGOL_SI_group.PV_allsb.A = NaN(nMice, totals_sbs);
+OCGOL_SI_group.PV_allsb.B = NaN(nMice, totals_sbs);
+
+OCGOL_SI_group.PV_offdiag.A = NaN(nMice, totals_sbs-1);
+OCGOL_SI_group.PV_offdiag.B = NaN(nMice, totals_sbs-1);
+
+OCGOL_SI_group.PV_count.A = NaN(nMice,1);
+OCGOL_SI_group.PV_count.B = NaN(nMice,1);
+
+% Loop through mice
+
+for mouse = 1:nMice
+    
+    mouseName = matchedMice{mouse};
+    
+    for f = 1:2
+        
+        fld = fields{f};
+        
+        % Day 1 relative values
+        OCGOL_SI_group.meanPV_rel_d1.(fld)(mouse,:) = ...
+            OCGOL_SIOnly.(mouseName).meanPV_rel_d1.(fld);
+        
+        % Session 1 vs 2 matrix
+        corrMat = OCGOL_SIOnly.(mouseName).PVcorr.(fld){1,2};
+        
+        if ~isempty(corrMat)
+            
+            % Store full matrix
+            OCGOL_SI_group.corrMap.(fld){mouse} = corrMat;
+            
+            % Main diagonal
+            OCGOL_SI_group.PV_allsb.(fld)(mouse,:) = diag(corrMat);
+            
+            % Off-diagonals
+            for ii = 1:(totals_sbs - 1)
+                OCGOL_SI_group.PV_offdiag.(fld)(mouse,ii) = ...
+                    mean(diag(corrMat, ii));
+            end
+            
+            % Neuron count
+            OCGOL_SI_group.PV_count.(fld)(mouse) = ...
+                OCGOL_SIOnly.(mouseName).nNeurons.(fld)(1,2);
+        end
+        
+    end
+end
+ 
+%RF storage
+RF_SI_group.meanPV_rel_d1 = NaN(nMice,1);
+RF_SI_group.PV_count = NaN(nMice,1);
+RF_SI_group.PV_allsb = NaN(nMice, totals_sbs);
+RF_SI_group.PV_offdiag = NaN(nMice, totals_sbs - 1);
+RF_SI_group.corrMap = cell(1,nMice);
+
+for mouse = 1:nMice   
+    mouseName = matchedMice{mouse};   
+    % Pull session 1 vs 2 correlation matrix
+    corrMat = RF_SIOnly.(mouseName).PVcorr.A{1,2};
+    
+    % Store mean relative to day 1
+    RF_SI_group.meanPV_rel_d1(mouse) = ...
+        RF_SIOnly.(mouseName).meanPV_rel_d1.A;
+    
+    % Store neuron count (tuned only now)
+    RF_SI_group.PV_count(mouse) = ...
+        RF_SIOnly.(mouseName).nNeurons.A(1,2);
+    
+    % Store full matrix
+    RF_SI_group.corrMap{mouse} = corrMat;
+    
+    if ~isempty(corrMat)
+        
+        % Main diagonal (position-by-position stability)
+        RF_SI_group.PV_allsb(mouse, :) = diag(corrMat);
+        
+        % Off-diagonal lags
+        for ii = 1:(totals_sbs - 1)
+            RF_SI_group.PV_offdiag(mouse, ii) = ...
+                mean(diag(corrMat, ii));
+        end
+        
+    end
+    
+end
+
+%% --- Collect matrices (remove empty ones safely) ---
+
+% Remove empty matrices safely OCGOL
+validA = ~cellfun(@isempty, OCGOL_SI_group.corrMap.A);
+validB = ~cellfun(@isempty, OCGOL_SI_group.corrMap.B);
+
+OCGOL_A_allMatrices = cat(3, OCGOL_SI_group.corrMap.A{validA});
+OCGOL_B_allMatrices = cat(3, OCGOL_SI_group.corrMap.B{validB});
+
+% Remove empty matrices safely RF
+validRF = ~cellfun(@isempty, RF_SI_group.corrMap);
+RF_allMatrices = cat(3, RF_SI_group.corrMap{validRF});
+
+% Average across mice
+OCGOL_A_avgMatrix = mean(OCGOL_A_allMatrices, 3, 'omitnan');
+OCGOL_B_avgMatrix = mean(OCGOL_B_allMatrices, 3, 'omitnan');
+RF_avgMatrix = mean(RF_allMatrices, 3, 'omitnan');
+
+%Plot average correlation map
+figure;
+
+subplot(3,1,1)
+imagesc([sb(1) sb(end)], [sb(1) sb(end)], RF_avgMatrix)
+colormap(gca, cmap_yellow);
+caxis([0 0.7]);
+colorbar('Location','westoutside');
+xlabel('Position'); ylabel('Position');
+title('RF (Tuned)')
+
+subplot(3,1,2)
+imagesc([sb(1) sb(end)], [sb(1) sb(end)], OCGOL_A_avgMatrix)
+colormap(gca, cmap_blue);
+caxis([0 0.7]);
+colorbar('Location','westoutside');
+xlabel('Position'); ylabel('Position');
+title('A (Tuned)')
+
+subplot(3,1,3)
+imagesc([sb(1) sb(end)], [sb(1) sb(end)], OCGOL_B_avgMatrix)
+colormap(gca, cmap_magenta);
+caxis([0 0.7]);
+colorbar('Location','westoutside');
+xlabel('Position'); ylabel('Position');
+title('B (Tuned)')
+
+set(findall(gcf, '-property', 'FontSize'), 'FontSize', 14);
+set(gcf, 'Renderer','painters')
+%exportgraphics(gcf, 'PVmap_tunedOnly.pdf', 'ContentType', 'vector','Resolution',300);
+%% PV SB binned by zone for SI only cells
+
+cue_PV_SI = [mean(RF_SI_group.PV_allsb(:,cue_range),2) mean(OCGOL_SI_group.PV_allsb.A(:,cue_range),2) mean(OCGOL_SI_group.PV_allsb.B(:,cue_range),2)];
+rzA_PV_SI = [mean(RF_SI_group.PV_allsb(:,rzA_range),2) mean(OCGOL_SI_group.PV_allsb.A(:,rzA_range),2) mean(OCGOL_SI_group.PV_allsb.B(:,rzA_range),2)];
+rzB_PV_SI = [mean(RF_SI_group.PV_allsb(:,rzB_range),2) mean(OCGOL_SI_group.PV_allsb.A(:,rzB_range),2) mean(OCGOL_SI_group.PV_allsb.B(:,rzB_range),2)];
+
+% writematrix(cue_PV_SI, fullfile(savepath,'cue_PV_SI.csv'));
+% writematrix(rzA_PV_SI, fullfile(savepath,'rzA_PV_SI.csv'));
+% writematrix(rzB_PV_SI, fullfile(savepath,'rzB_PV_SI.csv'));
+%% Plotting PV graphs for SI tuned cells
+% Plot PV correlation
+PV_SI_match = [RF_SI_group.meanPV_rel_d1 OCGOL_SI_group.meanPV_rel_d1.A OCGOL_SI_group.meanPV_rel_d1.B];
+
+%Export matrices for stats
+%writematrix(PV_SI_match, fullfile(savepath,'PV_SIOnly.csv'));
+
+%
+figure;
+subplot(4,1,1); hold on;
+for i=1:size(PV_SI_match,1)
+    plot(xTickVals,PV_SI_match(i,:),'Color',[0.5 0.5 0.5])
+end
+errorbar(1,mean(PV_SI_match(:,1)),SEM_col(PV_SI_match(:,1)),'LineWidth',2,'Color',yellow);
+errorbar(2,mean(PV_SI_match(:,2)),SEM_col(PV_SI_match(:,2)),'LineWidth',2,'Color', blue);
+errorbar(3,mean(PV_SI_match(:,3)),SEM_col(PV_SI_match(:,3)),'LineWidth',2,'Color', magenta);
+
+scatter(1,mean(PV_SI_match(:,1)),'s', 'filled', 'MarkerFaceColor', yellow)
+scatter(2,mean(PV_SI_match(:,2)),'s', 'filled', 'MarkerFaceColor', blue)
+scatter(3,mean(PV_SI_match(:,3)),'s', 'filled', 'MarkerFaceColor', magenta)
+xticks(xTickVals); xticklabels(xTickLabels); xlim(xLimits)
+ylim([0.2 0.8]); ylabel('PV Correlation')
+
+% Plot offdiagonal matrix and all spatial bins
+%Adjust for circularity
+nBins = 100;
+binSize = 2;
+track_length = nBins * binSize;
+
+lags = 1:(nBins - 1);
+dist = lags * binSize;
+
+% Circular distance
+circ_dist = min(dist, track_length - dist);
+
+% Signed circular distance (for mirroring)
+signed_dist = dist;
+signed_dist(dist > track_length/2) = ...
+    dist(dist > track_length/2) - track_length;
+
+[signed_dist_sorted, sort_idx] = sort(signed_dist);
+
+RF_mean = mean(RF_SI_group.PV_offdiag);
+RF_sem  = SEM_col(RF_SI_group.PV_offdiag);
+
+OC_A_mean = mean(OCGOL_SI_group.PV_offdiag.A);
+OC_A_sem  = SEM_col(OCGOL_SI_group.PV_offdiag.A);
+
+OC_B_mean = mean(OCGOL_SI_group.PV_offdiag.B);
+OC_B_sem  = SEM_col(OCGOL_SI_group.PV_offdiag.B);
+
+% Reorder everything
+RF_mean = RF_mean(sort_idx);
+RF_sem  = RF_sem(sort_idx);
+
+OC_A_mean = OC_A_mean(sort_idx);
+OC_A_sem  = OC_A_sem(sort_idx);
+
+OC_B_mean = OC_B_mean(sort_idx);
+OC_B_sem  = OC_B_sem(sort_idx);
+
+%re-sort offdiag matrix according to circularity
+RF_offdiag_sorted_SI   = RF_SI_group.PV_offdiag(:, sort_idx);
+OC_A_offdiag_sorted_SI = OCGOL_SI_group.PV_offdiag.A(:, sort_idx);
+OC_B_offdiag_sorted_SI = OCGOL_SI_group.PV_offdiag.B(:, sort_idx);
+%writematrix([RF_offdiag_sorted_SI' OC_A_offdiag_sorted_SI' OC_B_offdiag_sorted_SI'] , fullfile(savepath,'PVoffdiag_SI.csv'));
+
+results=friedman_stats(RF_offdiag_sorted_SI, OC_A_offdiag_sorted_SI, OC_B_offdiag_sorted_SI, {'RF','A','B'},false);
+%save(fullfile(savepath,'OffDiag_SI_Friedman.mat'), 'results');
+%writetable(results.pairwise_sig_table, fullfile(savepath,'OffDiag_SI_Friedman.xlsx'))
+
+% Split into negative and positive (exclude 0 just in case)
+neg_idx = signed_dist_sorted < 0;
+pos_idx = signed_dist_sorted > 0;
+
+subplot(4,1,4); hold on;
+% --- RF ---
+shadedErrorBar(signed_dist_sorted(neg_idx), ...
+    RF_mean(neg_idx), RF_sem(neg_idx), ...
+    'lineProps',{'Color',yellow,'LineWidth',1.5});
+
+shadedErrorBar(signed_dist_sorted(pos_idx), ...
+    RF_mean(pos_idx), RF_sem(pos_idx), ...
+    'lineProps',{'Color',yellow,'LineWidth',1.5});
+
+% --- A ---
+shadedErrorBar(signed_dist_sorted(neg_idx), ...
+    OC_A_mean(neg_idx), OC_A_sem(neg_idx), ...
+    'lineProps',{'Color',blue,'LineWidth',1.5});
+
+shadedErrorBar(signed_dist_sorted(pos_idx), ...
+    OC_A_mean(pos_idx), OC_A_sem(pos_idx), ...
+    'lineProps',{'Color',blue,'LineWidth',1.5});
+
+% --- B ---
+shadedErrorBar(signed_dist_sorted(neg_idx), ...
+    OC_B_mean(neg_idx), OC_B_sem(neg_idx), ...
+    'lineProps',{'Color',magenta,'LineWidth',1.5});
+
+shadedErrorBar(signed_dist_sorted(pos_idx), ...
+    OC_B_mean(pos_idx), OC_B_sem(pos_idx), ...
+    'lineProps',{'Color',magenta,'LineWidth',1.5});
+
+yline(0, 'k--', 'LineWidth',1.5,'HandleVisibility','off');
+xlabel('Circular Distance (cm)');
+ylabel('PV Correlation');
+xlim([-100 100]);
+ylim([-0.2 0.6]);
+plotSignificanceBars(gca,signed_dist_sorted,results)
+
+results=friedman_stats(RF_SI_group.PV_allsb, OCGOL_SI_group.PV_allsb.A, OCGOL_SI_group.PV_allsb.B, {'RF','A','B'},false);
+%save(fullfile(savepath,'PVAllSB_SI_Friedman.mat'), 'results');
+%writetable(results.pairwise_sig_table, fullfile(savepath,'PVAllSB_SI_Friedman.xlsx'))
+pos=1:2:200;
+subplot(4,1,2); hold on;
+shadedErrorBar(pos,mean(RF_SI_group.PV_allsb),SEM_col(RF_SI_group.PV_allsb),'lineProps',{'Color',yellow,'LineWidth',1.5});
+shadedErrorBar(pos,mean(OCGOL_SI_group.PV_allsb.A),SEM_col(OCGOL_SI_group.PV_allsb.A),'lineProps',{'Color',blue,'LineWidth',1.5});
+shadedErrorBar(pos,mean(OCGOL_SI_group.PV_allsb.B),SEM_col(OCGOL_SI_group.PV_allsb.B),'lineProps',{'Color',magenta,'LineWidth',1.5});
+xlabel('Position (cm)');
+ylim([0.2 0.8]); ylabel('PV Correlation')
+xline(pos(30),'--', 'LineWidth',1.5,'HandleVisibility', 'off','Color',magenta)
+xline(pos(70),'--', 'LineWidth',1.5,'HandleVisibility', 'off','Color',blue)
+
+yl = ylim;
+y_bar = yl(2) + 0.01;   % slightly above top of axis
+
+% Extend ylim slightly so bars are visible
+ylim([yl(1) yl(2)+0.03])
+
+% --- Cue zone ---
+plot([pos(1) pos(10)],   [y_bar y_bar], 'Color', green , 'LineWidth', 6, 'Clipping','off');
+plot([pos(96) pos(100)], [y_bar y_bar], 'Color', green , 'LineWidth', 6, 'Clipping','off');
+
+% --- B reward zone ---
+plot([pos(rzB_range(1)) pos(rzB_range(end))],  [y_bar y_bar], 'Color', magenta, 'LineWidth', 6, 'Clipping','off');
+
+% --- A reward zone ---
+plot([pos(rzA_range(1)) pos(rzA_range(end))],  [y_bar y_bar], 'Color', blue,'LineWidth', 6, 'Clipping','off');
+
+subplot(4,1,3); hold on
+for i=1:size(cue_PV_SI,1)
+    plot(xTickVals,cue_PV_SI(i,:),'Color',[0.5 0.5 0.5])
+end
+errorbar(1,mean(cue_PV_SI(:,1)),SEM_col(cue_PV_SI(:,1)),'LineWidth',2,'Color',yellow);
+errorbar(2,mean(cue_PV_SI(:,2)),SEM_col(cue_PV_SI(:,2)),'LineWidth',2,'Color', blue);
+errorbar(3,mean(cue_PV_SI(:,3)),SEM_col(cue_PV_SI(:,3)),'LineWidth',2,'Color', magenta);
+scatter(1,mean(cue_PV_SI(:,1)),'s', 'filled', 'MarkerFaceColor', yellow)
+scatter(2,mean(cue_PV_SI(:,2)),'s', 'filled', 'MarkerFaceColor', blue)
+scatter(3,mean(cue_PV_SI(:,3)),'s', 'filled', 'MarkerFaceColor', magenta)
+
+for i=1:size(rzA_PV_SI,1)
+    plot([4 5 6],rzA_PV_SI(i,:),'Color',[0.5 0.5 0.5])
+end
+errorbar(4,mean(rzA_PV_SI(:,1)),SEM_col(rzA_PV_SI(:,1)),'LineWidth',2,'Color',yellow);
+errorbar(5,mean(rzA_PV_SI(:,2)),SEM_col(rzA_PV_SI(:,2)),'LineWidth',2,'Color', blue);
+errorbar(6,mean(rzA_PV_SI(:,3)),SEM_col(rzA_PV_SI(:,3)),'LineWidth',2,'Color', magenta);
+scatter(4,mean(rzA_PV_SI(:,1)),'s', 'filled', 'MarkerFaceColor', yellow)
+scatter(5,mean(rzA_PV_SI(:,2)),'s', 'filled', 'MarkerFaceColor', blue)
+scatter(6,mean(rzA_PV_SI(:,3)),'s', 'filled', 'MarkerFaceColor', magenta)
+
+for i=1:size(rzB_PV_SI,1)
+    plot([7 8 9],rzB_PV_SI(i,:),'Color',[0.5 0.5 0.5])
+end
+errorbar(7,mean(rzB_PV_SI(:,1)),SEM_col(rzB_PV_SI(:,1)),'LineWidth',2,'Color',yellow);
+errorbar(8,mean(rzB_PV_SI(:,2)),SEM_col(rzB_PV_SI(:,2)),'LineWidth',2,'Color', blue);
+errorbar(9,mean(rzB_PV_SI(:,3)),SEM_col(rzB_PV_SI(:,3)),'LineWidth',2,'Color', magenta);
+scatter(7,mean(rzB_PV_SI(:,1)),'s', 'filled', 'MarkerFaceColor', yellow)
+scatter(8,mean(rzB_PV_SI(:,2)),'s', 'filled', 'MarkerFaceColor', blue)
+scatter(9,mean(rzB_PV_SI(:,3)),'s', 'filled', 'MarkerFaceColor', magenta)
+
+ylabel('PV Correlation'); ylim([0 1])
+xlim([0 10]); xticks([2 5 8]); xticklabels({'Cue Zone', 'A Zone', 'B Zone'});
+
+set(findall(gcf, '-property', 'FontSize'), 'FontSize', 14);
+set(gcf, 'Renderer','painters')
+%exportgraphics(gcf, 'PV_tunedOnly_inclZones.pdf', 'ContentType', 'vector','Resolution',300);
+%% Sample remapping plot for tuned only
+%RF
+%load("R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\RF\crossSession_update\PV_TC_corr.mat")
+%load("R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\RF\crossSession_update\matching_tun_curves.mat")
+load("R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH135\RFvOCGOL\crossSession_update\RF\PV_TC_corr.mat")
+load("R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH135\RFvOCGOL\crossSession_update\RF\matching_tun_curves.mat")
+match_A = PV_TC_corr.TCcorr_idx_match.si.A{1,2};              % tuned matched (original indices)
+all_match_A = PV_TC_corr.PV_corr_idx_match.A{1,2};            % all matched (original indices)
+[~, idx_A] = ismember(match_A, all_match_A, 'rows');
+
+tuning_curves_SI_1= matching_tun_curves.min_5_global_events.STC_norm{1, 1}(idx_A,:);
+tuning_curves_SI_2= matching_tun_curves.min_5_global_events.STC_norm{1, 2}(idx_A,:);
+[~,RF1_peak] = max(tuning_curves_SI_1,[],2);
+[~,RF1_order] = sort(RF1_peak);
+
+S1_RF = tuning_curves_SI_1(RF1_order,:);
+S2_RF = tuning_curves_SI_2(RF1_order,:);
+sb = 0:2:200;
+
+%OCGOL-A
+% load("R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\OCGOL\crossSession_update\PV_TC_corr.mat")
+% load("R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort3_Processed_RFvOCGOL\MH123\OCGOL\crossSession_update\matching_tun_curves.mat")
+load("R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH135\RFvOCGOL\crossSession_update\matching_tun_curves.mat")
+load("R:\basulabspace\MH\LEC_Bilateral_Silencing\Cohort_4\MH135\RFvOCGOL\crossSession_update\PV_TC_corr.mat")
+
+match_A = PV_TC_corr.TCcorr_idx_match.si.A{1,2};              % tuned matched (original indices)
+all_match_A = PV_TC_corr.PV_corr_idx_match.A{1,2};            % all matched (original indices)
+[~, idx_A] = ismember(match_A, all_match_A, 'rows');
+
+tuning_curves_SI_1= matching_tun_curves.min_5_global_events.STC_norm{1, 1}(idx_A,:);
+tuning_curves_SI_2= matching_tun_curves.min_5_global_events.STC_norm{1, 2}(idx_A,:);
+[~,OCGOLA_peak] = max(tuning_curves_SI_1,[],2);
+[~,OCGOLA_order] = sort(OCGOLA_peak);
+
+S1_OCGOLA = tuning_curves_SI_1(OCGOLA_order,:);
+S2_OCGOLA = tuning_curves_SI_2(OCGOLA_order,:);
+
+
+%OCGOL-B
+match_B = PV_TC_corr.TCcorr_idx_match.si.B{1,2};              % tuned matched (original indices)
+all_match_B = PV_TC_corr.PV_corr_idx_match.B{1,2};            % all matched (original indices)
+[~, idx_B] = ismember(match_B, all_match_B, 'rows');
+
+tuning_curves_SI_1= matching_tun_curves.min_5_global_events.STC_norm{2, 1}(idx_B,:);
+tuning_curves_SI_2= matching_tun_curves.min_5_global_events.STC_norm{2, 2}(idx_B,:);
+[~,OCGOLB_peak] = max(tuning_curves_SI_1,[],2);
+[~,OCGOLB_order] = sort(OCGOLB_peak);
+
+S1_OCGOLB = tuning_curves_SI_1(OCGOLB_order,:);
+S2_OCGOLB = tuning_curves_SI_2(OCGOLB_order,:);
+
+
+%%
+figure
+clf
+
+% ==============================
+% Compute neuron counts per row
+% ==============================
+
+n_RF     = length(RF1_order);
+n_OCGOLA = length(OCGOLA_order);
+n_OCGOLB = length(OCGOLB_order);
+
+nVec = [n_RF n_OCGOLA n_OCGOLB];
+rowFrac = nVec ./ sum(nVec);
+
+% ==============================
+% Layout parameters
+% ==============================
+
+leftMargin   = 0.18;   % increased to make space for labels + colorbar
+rightMargin  = 0.05;
+midGap       = 0.06;
+topMargin    = 0.05;
+bottomMargin = 0.07;
+rowGap       = 0.04;
+
+usableHeight = 1 - topMargin - bottomMargin - 2*rowGap;
+usableWidth  = 1 - leftMargin - rightMargin - midGap;
+
+colWidth = usableWidth/2;
+
+rowHeights = usableHeight * rowFrac;
+
+rowBottom(3) = bottomMargin;
+rowBottom(2) = rowBottom(3) + rowHeights(3) + rowGap;
+rowBottom(1) = rowBottom(2) + rowHeights(2) + rowGap;
+
+% Colorbar parameters
+colorbarWidth  = 0.015;
+colorbarGap    = 0.08;   % distance between axis and colorbar
+
+
+% ==============================
+% RF ROW
+% ==============================
+
+s1 = axes('Position',[leftMargin rowBottom(1) colWidth rowHeights(1)]);
+imagesc([sb(1) sb(end)], [1 n_RF], S1_RF)
+colormap(s1, cmap_yellow)
+caxis([0 1])
+ylabel('Neuron')
+title('RF')
+
+% Manual colorbar
+cb1 = colorbar;
+cb1.Position = [leftMargin - colorbarGap - colorbarWidth, ...
+                rowBottom(1), ...
+                colorbarWidth, ...
+                rowHeights(1)];
+
+s2 = axes('Position',[leftMargin+colWidth+midGap rowBottom(1) colWidth rowHeights(1)]);
+imagesc([sb(1) sb(end)], [1 n_RF], S2_RF)
+colormap(s2, cmap_yellow)
+caxis([0 1])
+title('RF')
+
+% ==============================
+% OCGOL-A ROW
+% ==============================
+
+s3 = axes('Position',[leftMargin rowBottom(2) colWidth rowHeights(2)]);
+imagesc([sb(1) sb(end)], [1 n_OCGOLA], S1_OCGOLA)
+colormap(s3, cmap_blue)
+caxis([0 1])
+ylabel('Neuron')
+title('A')
+xline(sb(70),'k--','LineWidth',2)
+
+cb2 = colorbar;
+cb2.Position = [leftMargin - colorbarGap - colorbarWidth, ...
+                rowBottom(2), ...
+                colorbarWidth, ...
+                rowHeights(2)];
+
+s4 = axes('Position',[leftMargin+colWidth+midGap rowBottom(2) colWidth rowHeights(2)]);
+imagesc([sb(1) sb(end)], [1 n_OCGOLA], S2_OCGOLA)
+colormap(s4, cmap_blue)
+caxis([0 1])
+title('A')
+xline(sb(70),'k--','LineWidth',2)
+
+% ==============================
+% OCGOL-B ROW
+% ==============================
+
+s5 = axes('Position',[leftMargin rowBottom(3) colWidth rowHeights(3)]);
+imagesc([sb(1) sb(end)], [1 n_OCGOLB], S1_OCGOLB)
+colormap(s5, cmap_magenta)
+caxis([0 1])
+ylabel('Neuron')
+xlabel('Position')
+title('B')
+xline(sb(30),'k--','LineWidth',2)
+
+cb3 = colorbar;
+cb3.Position = [leftMargin - colorbarGap - colorbarWidth, ...
+                rowBottom(3), ...
+                colorbarWidth, ...
+                rowHeights(3)];
+
+s6 = axes('Position',[leftMargin+colWidth+midGap rowBottom(3) colWidth rowHeights(3)]);
+imagesc([sb(1) sb(end)], [1 n_OCGOLB], S2_OCGOLB)
+colormap(s6, cmap_magenta)
+caxis([0 1])
+title('B')
+xline(sb(30),'k--','LineWidth',2)
+xlabel('Position')
+
+% ==============================
+% Formatting
+% ==============================
+
+set(findall(gcf, '-property', 'FontSize'), 'FontSize', 14);
+set(gcf, 'Renderer', 'painters');
+%exportgraphics(gcf, 'PV_remapping_ex_tunedOnly.pdf', 'ContentType', 'vector','Resolution',300);
+

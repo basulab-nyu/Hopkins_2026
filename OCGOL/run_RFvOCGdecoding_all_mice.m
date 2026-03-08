@@ -1,0 +1,56 @@
+function [RF, OCGOL_A, OCGOL_B] = run_RFvOCGdecoding_all_mice(baseDir)
+% baseDir = 'R:\MH\Decoding';
+% trialTypeToUse: 2 or 3
+
+    mouseFolders = dir(fullfile(baseDir, 'MH*'));
+    mouseNames = {};
+    
+    % Filter out folders missing either '1' or '2' subfolders or the required .mat files
+    for i = 1:length(mouseFolders)
+        mousePath = fullfile(baseDir, mouseFolders(i).name);
+        path1 = fullfile(mousePath, '1', 'matched_transients_all_ses.mat');
+        path2 = fullfile(mousePath, '2', 'matched_transients_all_ses.mat');
+        if exist(path1, 'file') && exist(path2, 'file')
+            mouseNames{end+1} = mouseFolders(i).name; %#ok<AGROW>
+        else
+            fprintf('Skipping %s (missing .mat in 1 or 2)\n', mouseFolders(i).name);
+        end
+    end
+
+    fprintf('Processing %d mice...\n', length(mouseNames));
+
+    % Initialize output
+    RF = struct();       % For folder '1' with indice = 3
+    OCGOL_A = struct();  % For folder '2' with indice = 2
+    OCGOL_B = struct();  % For folder '2' with indice = 3
+
+    % Process each mouse
+    for iMouse = 1:length(mouseNames)
+        mouse = mouseNames{iMouse};
+        fprintf('Running mouse %s\n', mouse);
+
+        % Folder '1' (always uses indice=3)
+        dataPath1 = fullfile(baseDir, mouse, '1', 'matched_transients_all_ses.mat');
+        if exist(dataPath1, 'file')
+            RF.(mouse) = run_PosDecoding(dataPath1, 3, 0);
+        end
+
+        % Folder '2' (run twice with indice=2 and indice=3)
+        dataPath2 = fullfile(baseDir, mouse, '2', 'matched_transients_all_ses.mat');
+        if exist(dataPath2, 'file')
+            OCGOL_A.(mouse) = run_PosDecoding(dataPath2, 2, 1);
+            OCGOL_B.(mouse) = run_PosDecoding(dataPath2, 3, 1);
+        end
+    end
+
+    fprintf('Saving structure.\n');
+
+    % Define the filename
+    filename = fullfile(baseDir, 'DecodingErr_RFvOCG_');
+    date_string = datetime('now', 'Format', 'yyyyMMdd');
+    filename = [filename, char(date_string), '.mat'];
+   
+    % Save the structures
+    save(filename,'RF','OCGOL_A', 'OCGOL_B');
+
+end
